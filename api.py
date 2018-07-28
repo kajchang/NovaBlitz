@@ -6,9 +6,9 @@ app = Flask(__name__)
 
 @app.route('/cards/<card_name>')
 def cards(card_name):
-    for file in glob.glob('cards/*.json'):
-        if file[6:-5].lower() == card_name.lower():
-            return send_from_directory('cards', file[6:])
+    for file_ in glob.glob('cards/*.json'):
+        if file_[6:-5].lower() == card_name.lower():
+            return send_from_directory('cards', file_[6:])
 
     return render_template('404.html', card_name=card_name), 404
 

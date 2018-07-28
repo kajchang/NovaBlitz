@@ -1,6 +1,6 @@
 # NovaBlitz API
 
-A restful JSON API for the cards in the [NovaBlitz card game](https://novablitz.com/) in under 50 lines of code.
+A restful JSON API for the cards in the [NovaBlitz card game](https://novablitz.com/).
 
 Live on PythonAnywhere [here](http://novablitz.pythonanywhere.com/cards/acolyteofhalos).
 
@@ -49,6 +49,18 @@ $ curl localhost:5000/cards/acolyteofhalos
 
 `cards/card_name`
 
-Returns information on the card in `json` format.
+Returns information on the card.
 
-Example url: [http://novablitz.pythonanywhere.com/cards/acolyteofhalos](http://novablitz.pythonanywhere.com/cards/acolyteofhalos)
+Example: [http://novablitz.pythonanywhere.com/cards/acolyteofhalos](http://novablitz.pythonanywhere.com/cards/acolyteofhalos)
+
+`cardlist`
+
+Returns a list of the names of every card.
+
+Example: [http://novablitz.pythonanywhere.com/cardlist](http://novablitz.pythonanywhere.com/cardlist)
+
+`cards?cards[]=card_name1&cards[]=card_name2`
+
+The same as the `cards/card_name` endpoint, but for searching for multiple cards in one request.
+
+Example: [http://novablitz.pythonanywhere.com/cards?cards[]=FairySentry&cards[]=FlayedDemon&cards[]=AcolyteOfHalos](http://novablitz.pythonanywhere.com/cards?cards[]=FairySentry&cards[]=FlayedDemon&cards[]=AcolyteOfHalos)

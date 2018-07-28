@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import requests
 from bs4 import BeautifulSoup
 import os
@@ -30,4 +33,4 @@ for page in pages:
                 '\n', '').strip()) if value.text.replace('\n', '').strip().isdigit() else value.text.replace('\n', '').strip()
 
         with open('cards/{}.json'.format(card.find(class_='title').text.replace(' ', '')), 'w') as card_file:
-            card_file.write(json.dumps(card_data, indent=4))
+            card_file.write(json.dumps(card_data))

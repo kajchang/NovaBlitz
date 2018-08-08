@@ -1,44 +1,60 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import (Flask, render_template,
-                   send_from_directory, request, make_response, jsonify)
-import glob
+from flask import (Flask, render_template, redirect,
+                   request, jsonify)
 import os
-import json
+import sqlite3
 
 app = Flask(__name__)
 
 
+def reconstruct_card(data_tuple):
+    return {'name': data_tuple[0],
+            'cost': data_tuple[1],
+            'type': data_tuple[2],
+            'set': data_tuple[3],
+            'rarity': data_tuple[4],
+            'aspect': data_tuple[5],
+            'image': data_tuple[6],
+            'text': data_tuple[7],
+            'subtype': data_tuple[8],
+            'attack': data_tuple[9],
+            'health': data_tuple[10]}
+
+
+@app.route('/')
+def main():
+    return redirect('https://documenter.getpostman.com/view/4967569/RWTivyzL'), 301
+
+
 @app.route('/cards/<card_name>')
 def cardsearch(card_name):
-    for file_ in glob.glob('cards/*.json'):
-        if os.path.basename(file_.lower()).replace('.json', '') == card_name.lower():
-            resp = make_response(send_from_directory(
-                'cards', os.path.basename(file_)))
-            resp.headers['Content-Type'] = 'application/json'
+    with sqlite3.connect(os.path.join(os.path.dirname(__file__), 'cards.db')) as conn:
+        c = conn.cursor()
+        card = c.execute(
+            'SELECT * FROM "CARDS" WHERE "NAME" = ?', (card_name.lower(),)).fetchone()
+        if card is None:
+            return render_template('404.html', card_name=card_name), 404
 
-            return resp
-
-    return render_template('404.html', card_name=card_name), 404
+        else:
+            return jsonify(reconstruct_card(card))
 
 
 @app.route('/cards')
 def cards():
-    resp = make_response(jsonify([json.load(open(file_)) for file_ in glob.glob('cards/*.json') if os.path.basename(
-        file_.lower()).replace('.json', '') in [card.lower() for card in request.args.getlist('cards[]', None)]]))
-    resp.headers['Content-Type'] = 'application/json'
-
-    return resp
+    with sqlite3.connect(os.path.join(os.path.dirname(__file__), 'cards.db')) as conn:
+        c = conn.cursor()
+        card_names = [card_name.lower()
+                      for card_name in request.args.getlist('cards[]', None)]
+        return jsonify([reconstruct_card(card) for card in c.execute('SELECT * FROM "CARDS" WHERE "NAME" IN ({0}?)'.format('?,' * (len(card_names) - 1)), tuple(card_names)).fetchall()])
 
 
 @app.route('/cardlist')
 def cardlist():
-    resp = make_response(jsonify([os.path.basename(card).replace(
-        '.json', '') for card in glob.glob('cards/*.json')]))
-    resp.headers['Content-Type'] = 'application/json'
-
-    return resp
+    with sqlite3.connect(os.path.join(os.path.dirname(__file__), 'cards.db')) as conn:
+        c = conn.cursor()
+        return jsonify([name[0] for name in c.execute('SELECT "NAME" FROM "CARDS"').fetchall()])
 
 
 if __name__ == '__main__':

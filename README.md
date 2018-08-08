@@ -4,7 +4,7 @@ A restful JSON API for the cards in the [NovaBlitz card game](https://novablitz.
 
 Live on PythonAnywhere [here](http://novablitz.pythonanywhere.com/cards/acolyteofhalos).
 
-## Usage
+## Getting Started
 
 Clone this repository:
 
@@ -45,22 +45,6 @@ $ curl localhost:5000/cards/acolyteofhalos
 }
 ```
 
-## Endpoints
+## Documentation
 
-`cards/card_name`
-
-Returns information on the card.
-
-Example: [http://novablitz.pythonanywhere.com/cards/acolyteofhalos](http://novablitz.pythonanywhere.com/cards/acolyteofhalos)
-
-`cardlist`
-
-Returns a list of the names of every card.
-
-Example: [http://novablitz.pythonanywhere.com/cardlist](http://novablitz.pythonanywhere.com/cardlist)
-
-`cards?cards[]=card_name1&cards[]=card_name2`
-
-The same as the `cards/card_name` endpoint, but for searching for multiple cards in one request.
-
-Example: [http://novablitz.pythonanywhere.com/cards?cards[]=FairySentry&cards[]=FlayedDemon&cards[]=AcolyteOfHalos](http://novablitz.pythonanywhere.com/cards?cards[]=FairySentry&cards[]=FlayedDemon&cards[]=AcolyteOfHalos)
+[Postman](https://documenter.getpostman.com/view/4967569/RWTivyzL)

@@ -10,17 +10,17 @@ app = Flask(__name__)
 
 
 def reconstruct_card(data_tuple):
-    return {'name': data_tuple[0],
-            'cost': data_tuple[1],
-            'type': data_tuple[2],
-            'set': data_tuple[3],
-            'rarity': data_tuple[4],
-            'aspect': data_tuple[5],
-            'image': data_tuple[6],
-            'text': data_tuple[7],
-            'subtype': data_tuple[8],
-            'attack': data_tuple[9],
-            'health': data_tuple[10]}
+    return {'name': data_tuple[1],
+            'cost': data_tuple[2],
+            'type': data_tuple[3],
+            'set': data_tuple[4],
+            'rarity': data_tuple[5],
+            'aspect': data_tuple[6],
+            'image': data_tuple[7],
+            'text': data_tuple[8],
+            'subtype': data_tuple[9],
+            'attack': data_tuple[10],
+            'health': data_tuple[11]}
 
 
 @app.route('/')

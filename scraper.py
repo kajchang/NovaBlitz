@@ -35,6 +35,7 @@ for page in pages:
             'NAME': ''.join(card.find(class_='title').text.split()).lower(),
             'IMAGE': card.find('img')['src'],
             'CARDTEXT': card.find('p', style='font-weight: bold;').text if card.find('p', style='font-weight: bold;') else None,
+            'REALNAME': card.find(class_='title').text
         }
 
         if card_data['NAME'] == 'demonichorror':
@@ -45,7 +46,7 @@ for page in pages:
                 '\n', '').strip()) if value.text.replace('\n', '').strip().isdigit() else value.text.replace('\n', '').strip()
 
         c.execute('INSERT OR REPLACE INTO CARDS {0}\nVALUES ({1}?);'.format(tuple(card_data),
-                                                                 '?,' * (len(card_data) - 1)), tuple(card_data.values()))
+                                                                            '?,' * (len(card_data) - 1)), tuple(card_data.values()))
         conn.commit()
 
 conn.close()

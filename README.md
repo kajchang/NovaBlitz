@@ -13,7 +13,7 @@ $ git clone https://github.com/kajchang/NovaBlitz.git
 $ cd NovaBlitz
 ```
 
-Assemble the latest card data in `json` format by scraping the NovaBlitz wiki (this will take around a minute):
+Assemble the latest card data into a sqlite database:
 
 ```bash
 $ python3 scraper.py

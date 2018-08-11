@@ -37,8 +37,7 @@ def cardsearch(card_name):
         if card is None:
             return render_template('404.html', card_name=card_name), 404
 
-        else:
-            return jsonify(reconstruct_card(card))
+        return jsonify(reconstruct_card(card))
 
 
 @app.route('/cards')
